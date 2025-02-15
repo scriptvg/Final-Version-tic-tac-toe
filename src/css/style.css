@@ -1,0 +1,186 @@
+/* Definición de variables globales */
+:root {
+    --bg-color: #e0e5ec;
+    --shadow-dark: #a3b1c6;
+    --shadow-light: #ffffff;
+    --border-radius: 15px;
+    --box-shadow: 8px 8px 15px var(--shadow-dark), -8px -8px 15px var(--shadow-light);
+    --box-shadow-inset: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+    --transition: all 0.3s ease;
+    --background-gradient: 
+        radial-gradient(at 40% 20%, hsla(28, 100%, 74%, 1) 0px, transparent 50%),
+        radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 1) 0px, transparent 50%),
+        radial-gradient(at 80% 50%, hsla(340, 100%, 76%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsla(22, 100%, 77%, 1) 0px, transparent 50%),
+        radial-gradient(at 80% 100%, hsla(340, 100%, 76%, 1) 0px, transparent 50%);
+}
+
+/* Estilos generales del cuerpo */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    background: var(--background-gradient) no-repeat fixed;
+    padding: 20px;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Estilos comunes para controles, tablero, marcador y menú de personaje */
+.controls, .tablero, .marcador, .menuPersonaje, .menu {
+    background: var(--bg-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+/* Efecto de escala al hacer hover */
+@media (hover: hover) {
+    .controls:hover, .tablero:hover, .marcador:hover, .menuPersonaje:hover, .menu:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* Estilos específicos para controles y menú de personaje */
+.controls, .menuPersonaje {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Contenedor para el menú y el tablero */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Estilos del tablero de juego */
+.tablero {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    aspect-ratio: 1 / 1;
+    max-width: 300px;
+}
+
+/* Estilos de las casillas del tablero */
+.casilla {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10vw;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    background: var(--bg-color);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+    transition: var(--transition);
+}
+
+@media (min-width: 600px) {
+    .casilla {
+        font-size: 48px;
+    }
+}
+
+/* Efectos de hover y active para casillas y botones */
+@media (hover: hover) {
+    .casilla:hover, button:hover {
+        box-shadow: var(--box-shadow-inset);
+        transform: scale(1.1);
+    }
+}
+
+.casilla:active, .winning-cell {
+    box-shadow: var(--box-shadow-inset);
+    transform: scale(1.1);
+}
+
+/* Animación de rotación al hacer clic en una casilla */
+.casilla:active {
+    animation: rotate 0.5s linear;
+}
+
+/* Estilos del marcador */
+.marcador {
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Estilos de los botones */
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #4CAF50;
+    background: var(--bg-color);
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    width: 100%;
+    max-width: 200px;
+}
+
+/* Animación para las casillas ganadoras */
+.winning-cell {
+    animation: pulse 1s infinite;
+}
+
+/* Estilos para las etiquetas del menú de personaje */
+.menuPersonaje label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Estilos para los inputs del menú de personaje */
+.menuPersonaje input, .menuPersonaje select {
+    padding: 8px;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--bg-color);
+    box-shadow: var(--box-shadow-inset);
+    transition: var(--transition);
+    width: 100%;
+}
+
+.menuPersonaje input:focus, .menuPersonaje select:focus {
+    transform: scale(1.05);
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+    0%, 100% { box-shadow: var(--box-shadow-inset); transform: scale(1); }
+    50% { box-shadow: var(--box-shadow); transform: scale(1.05); }
+}
+
+/* Animación de rotación */
+@keyframes rotate {
+    from { transform: rotate(0deg) scale(1.1); }
+    to { transform: rotate(360deg) scale(1.1); }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .controls, .tablero, .marcador, .menuPersonaje, .menu {
+        padding: 15px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="src/css/style.css">
+
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+
+  <div class="menu game-container">
+    <div class="menuPersonaje">
+        <label>
+          Jugador 1:
+          <input type="text" id="nombreJugador1" placeholder="Nombre" />
+        </label>
+        <label>
+          Jugador 2 / IA:
+          <input type="text" id="nombreJugador2" placeholder="Nombre" />
+        </label>
+      </div>
+    
+      <div>
+        <label class="menuPersonaje">
+          Modo de Juego:
+          <select id="modoJuego">
+            <option value="pvp">Jugador vs Jugador</option>
+            <option value="random">Jugador vs Random</option>
+            <option value="minimax">Jugador vs Minimax</option>
+          </select>
+        </label>
+      </div>
+    
+      <button id="iniciarJuego">Iniciar Juego</button>
+    
+      <div class="marcador">
+        <h2>Marcador</h2>
+      <p>X: <span id="marcadorX">0</span></p><br>
+      <p>O: <span id="marcadorO">0</span></p>
+      <p>Empate: <span id="empate">0</span></p>
+      </div>
+
+      <div class="tablero" id="tablero">
+        <div class="casilla" id="cell-0"></div>
+        <div class="casilla" id="cell-1"></div>
+        <div class="casilla" id="cell-2"></div>
+        <div class="casilla" id="cell-3"></div>
+        <div class="casilla" id="cell-4"></div>
+        <div class="casilla" id="cell-5"></div>
+        <div class="casilla" id="cell-6"></div>
+        <div class="casilla" id="cell-7"></div>
+        <div class="casilla" id="cell-8"></div>
+      </div>
+
+      <button id="reiniciar">Reiniciar Juego</button>
+  </div>
+
+
+
+
+
+    <script src="src/js/main.js"></script>
+</body>
+</html>
