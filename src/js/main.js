@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
             aleatorio: { X: 0, O: 0, empate: 0 },
             minimax: { X: 0, O: 0, empate: 0 }
         },
-        juegoTerminado: false,
+        juegoTerminado: true,
 
         iniciar() {
             this.tablero = Array(9).fill("");
@@ -61,8 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
         },
 
         manejarClickCasilla(evento) {
+            if (this.juegoTerminado) return;
             const indiceCasilla = evento.target.id.split("-")[1];
-            if (this.tablero[indiceCasilla] || this.juegoTerminado) return;
+            if (this.tablero[indiceCasilla]) return;
 
             this.tablero[indiceCasilla] = this.jugadorActual;
             this.renderizarTablero();
@@ -81,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             this.jugadorActual = this.jugadorActual === "X" ? "O" : "X";
             turnIndicator.textContent = `Turno de: ${this.jugadorActual}`;
 
-            if (!this.juegoTerminado && this.modo !== "pvp" && this.jugadorActual === "O") {
+            if (this.modo !== "pvp" && this.jugadorActual === "O") {
                 setTimeout(() => {
                     this.modo === "aleatorio" ? this.movimientoIAAleatorio() : this.movimientoIAMinimax();
                 }, 500);
@@ -133,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
             botonIniciar.addEventListener("click", () => {
                 this.modo = seleccionModo.value;
                 this.actualizarMarcador();
-                this.reiniciarJuego();
+                this.iniciar();
             });
 
             botonReiniciarMarcador.addEventListener("click", () => this.reiniciarMarcador());
@@ -213,6 +214,5 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     TresEnRaya.asignarEventos();
-    TresEnRaya.iniciar();
     TresEnRaya.actualizarMarcador();
 });

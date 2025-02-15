@@ -29,7 +29,7 @@ body {
 }
 
 /* Estilos comunes para controles, tablero, marcador y menú de personaje */
-.controls, .tablero, .marcador, .menuPersonaje, .menu {
+.controls, .tablero, .marcador, .menuPersonaje, .menu, #turnos {
     background: var(--bg-color);
     border-radius: var(--border-radius);
     padding: 20px;
@@ -38,6 +38,14 @@ body {
     width: 100%;
     max-width: 400px;
     margin-bottom: 20px;
+}
+
+#turno {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #333;  
 }
 
 /* Efecto de escala al hacer hover */
