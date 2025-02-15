@@ -42,8 +42,8 @@ body {
 
 /* Efecto de escala al hacer hover */
 @media (hover: hover) {
-    .controls:hover, .tablero:hover, .marcador:hover, .menuPersonaje:hover, .menu:hover {
-        transform: scale(1.05);
+    .controls:hover, .tablero:hover, .marcador:hover, .menuPersonaje:hover {
+        transform: scale(1.03);
     }
 }
 
@@ -112,6 +112,7 @@ body {
 
 /* Estilos del marcador */
 .marcador {
+    margin-top: 20px;
     font-size: 18px;
     text-align: center;
 }
