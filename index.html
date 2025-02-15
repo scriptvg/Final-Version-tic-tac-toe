@@ -20,27 +20,32 @@
           Jugador 2 / IA:
           <input type="text" id="nombreJugador2" placeholder="Nombre" />
         </label>
+
+        <label>
+            Modo de Juego:
+            <select id="modoJuego">
+              <option value="pvp">Jugador vs Jugador</option>
+              <option value="random">Jugador vs Random</option>
+              <option value="minimax">Jugador vs Minimax</option>
+            </select>
+          </label>
+
+        <button id="iniciarJuego">Iniciar Juego</button>
       </div>
     
-      <div>
-        <label class="menuPersonaje">
-          Modo de Juego:
-          <select id="modoJuego">
-            <option value="pvp">Jugador vs Jugador</option>
-            <option value="random">Jugador vs Random</option>
-            <option value="minimax">Jugador vs Minimax</option>
-          </select>
-        </label>
-      </div>
+        
     
-      <button id="iniciarJuego">Iniciar Juego</button>
+      
     
       <div class="marcador">
         <h2>Marcador</h2>
-      <p>X: <span id="marcadorX">0</span></p><br>
+      <p>X: <span id="marcadorX">0</span></p>
       <p>O: <span id="marcadorO">0</span></p>
       <p>Empate: <span id="empate">0</span></p>
+      <button id="reiniciarMarcador">Reiniciar Marcador</button>
       </div>
+
+      
 
       <div class="tablero" id="tablero">
         <div class="casilla" id="cell-0"></div>
@@ -57,9 +62,10 @@
       <button id="reiniciar">Reiniciar Juego</button>
   </div>
 
+  
 
-
-
+  <div id="turnIndicator" class="hidden">Turno de: X</div>
+  <div id="gameOverlay" class="hidden"></div>
 
     <script src="src/js/main.js"></script>
 </body>

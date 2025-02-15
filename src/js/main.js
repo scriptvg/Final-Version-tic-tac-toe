@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const puntajeX = document.getElementById("marcadorX");
     const puntajeO = document.getElementById("marcadorO");
     const puntajeEmpate = document.getElementById("empate");
+    const turnIndicator = document.getElementById("turnIndicator");
+    const gameOverlay = document.getElementById("gameOverlay");
+    const botonReiniciarMarcador = document.getElementById("reiniciarMarcador");
 
     const TresEnRaya = {
         tablero: Array(9).fill(""),
@@ -23,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
             this.jugadorActual = "X";
             this.juegoTerminado = false;
             this.renderizarTablero();
+            this.toggleInputs(false);
+            turnIndicator.textContent = `Turno de: ${this.jugadorActual}`;
         },
 
         renderizarTablero() {
@@ -74,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             this.jugadorActual = this.jugadorActual === "X" ? "O" : "X";
+            turnIndicator.textContent = `Turno de: ${this.jugadorActual}`;
 
             if (!this.juegoTerminado && this.modo !== "pvp" && this.jugadorActual === "O") {
                 setTimeout(() => {
@@ -82,48 +88,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
 
-        movimientoIAAleatorio() {
-            const movimientosDisponibles = this.tablero
-                .map((casilla, indice) => (casilla === "" ? indice : null))
-                .filter(indice => indice !== null);
-            const indiceAleatorio = movimientosDisponibles[Math.floor(Math.random() * movimientosDisponibles.length)];
-            this.manejarClickCasilla({ target: casillas[indiceAleatorio] });
-        },
-
-        movimientoIAMinimax() {
-            const mejorMovimiento = this.minimax(this.tablero.slice(), "O");
-            if (mejorMovimiento.indice !== undefined) {
-                this.manejarClickCasilla({ target: casillas[mejorMovimiento.indice] });
-            }
-        },
-
-        minimax(nuevoTablero, jugador) {
-            const ganador = this.verificarGanador(nuevoTablero);
-            if (ganador === "O") return { puntuacion: 10 };
-            if (ganador === "X") return { puntuacion: -10 };
-            if (!nuevoTablero.includes("")) return { puntuacion: 0 };
-
-            const movimientosDisponibles = nuevoTablero
-                .map((casilla, indice) => (casilla === "" ? indice : null))
-                .filter(indice => indice !== null);
-
-            const movimientos = movimientosDisponibles.map(indice => {
-                const movimiento = { indice };
-                nuevoTablero[indice] = jugador;
-                movimiento.puntuacion = this.minimax(nuevoTablero, jugador === "O" ? "X" : "O").puntuacion;
-                nuevoTablero[indice] = "";
-                return movimiento;
-            });
-
-            if (jugador === "O") {
-                return movimientos.reduce((mejor, movimiento) => movimiento.puntuacion > mejor.puntuacion ? movimiento : mejor, { puntuacion: -Infinity });
-            } else {
-                return movimientos.reduce((mejor, movimiento) => movimiento.puntuacion < mejor.puntuacion ? movimiento : mejor, { puntuacion: Infinity });
-            }
+        toggleInputs(disable) {
+            document.getElementById("nombreJugador1").disabled = disable;
+            document.getElementById("nombreJugador2").disabled = disable;
+            seleccionModo.disabled = disable;
+            botonIniciar.disabled = disable;
         },
 
         terminarJuego(resultado) {
             this.juegoTerminado = true;
+            this.toggleInputs(true);
             if (resultado === "empate") {
                 this.puntuacion[this.modo].empate = (this.puntuacion[this.modo].empate || 0) + 1;
                 setTimeout(() => alert("¡Empate!"), 100);
@@ -139,6 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
             this.iniciar();
         },
 
+        reiniciarMarcador() {
+            this.puntuacion = {
+                pvp: { X: 0, O: 0, empate: 0 },
+                aleatorio: { X: 0, O: 0, empate: 0 },
+                minimax: { X: 0, O: 0, empate: 0 }
+            };
+            this.guardarPuntuacion();
+            this.actualizarMarcador();
+        },
+
         asignarEventos() {
             casillas.forEach(casilla => {
                 casilla.addEventListener("click", this.manejarClickCasilla.bind(this));
@@ -151,6 +135,80 @@ document.addEventListener("DOMContentLoaded", () => {
                 this.actualizarMarcador();
                 this.reiniciarJuego();
             });
+
+            botonReiniciarMarcador.addEventListener("click", () => this.reiniciarMarcador());
+        },
+
+        minimax(tablero, jugador) {
+            const resultado = this.verificarGanador(tablero);
+            if (resultado) {
+                if (resultado === "X") {
+                    return { puntaje: -1 };
+                } else if (resultado === "O") {
+                    return { puntaje: 1 };
+                } else {
+                    return { puntaje: 0 };
+                }
+            }
+
+            if (!tablero.includes("")) {
+                return { puntaje: 0 };
+            }
+
+            if (jugador === "O") {
+                let mejorPuntaje = -Infinity;
+                let mejorMovimiento;
+
+                for (let i = 0; i < tablero.length; i++) {
+                    if (tablero[i] === "") {
+                        tablero[i] = jugador;
+                        const resultado = this.minimax(tablero, "X");
+                        tablero[i] = "";
+                        if (resultado.puntaje > mejorPuntaje) {
+                            mejorPuntaje = resultado.puntaje;
+                            mejorMovimiento = { indice: i, puntaje: mejorPuntaje };
+                        }
+                    }
+                }
+
+                return mejorMovimiento;
+            } else {
+                let mejorPuntaje = Infinity;
+                let mejorMovimiento;
+
+                for (let i = 0; i < tablero.length; i++) {
+                    if (tablero[i] === "") {
+                        tablero[i] = jugador;
+                        const resultado = this.minimax(tablero, "O");
+                        tablero[i] = "";
+                        if (resultado.puntaje < mejorPuntaje) {
+                            mejorPuntaje = resultado.puntaje;
+                            mejorMovimiento = { indice: i, puntaje: mejorPuntaje };
+                        }
+                    }
+                }
+
+                return mejorMovimiento;
+            }
+        },
+
+        movimientoIAAleatorio() {
+            const indiceAleatorio = Math.floor(Math.random() * this.tablero.length);
+            if (this.tablero[indiceAleatorio] === "") {
+                this.tablero[indiceAleatorio] = "O";
+                this.renderizarTablero();
+                this.manejarClickCasilla({ target: casillas[indiceAleatorio] });
+            } else {
+                this.movimientoIAAleatorio();
+            }
+        },
+
+        movimientoIAMinimax() {
+            const mejorMovimiento = this.minimax(this.tablero.slice(), "O");
+            if (mejorMovimiento.indice !== undefined) {
+                const targetCell = casillas[mejorMovimiento.indice];
+                this.manejarClickCasilla({ target: targetCell });
+            }
         }
     };
 

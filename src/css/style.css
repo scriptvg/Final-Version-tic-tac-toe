@@ -58,6 +58,7 @@ body {
 .game-container {
     display: flex;
     flex-direction: column;
+    columns: 2;
     align-items: center;
     width: 100%;
 }
@@ -110,10 +111,21 @@ body {
     animation: rotate 0.5s linear;
 }
 
+/* Animación de rotación para el efecto de movimiento de la IA */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.casilla.rotate {
+    animation: rotate 0.5s linear;
+}
+
 /* Estilos del marcador */
 .marcador {
-    margin-top: 20px;
-    font-size: 18px;
+    padding: 0px;
+    margin-top: 10px;
+    font-size: 14px;
     text-align: center;
 }
 
@@ -165,21 +177,14 @@ button {
     50% { box-shadow: var(--box-shadow); transform: scale(1.05); }
 }
 
-/* Animación de rotación */
-@keyframes rotate {
-    from { transform: rotate(0deg) scale(1.1); }
-    to { transform: rotate(360deg) scale(1.1); }
-}
-
+/* Estilos responsivos */
 @media (max-width: 600px) {
     body {
         padding: 10px;
     }
-    
     .controls, .tablero, .marcador, .menuPersonaje, .menu {
-        padding: 15px;
+        padding: 10px;
     }
-    
     button {
         padding: 10px 20px;
         font-size: 14px;
