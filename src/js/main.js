@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const puntajeX = document.getElementById("marcadorX");
     const puntajeO = document.getElementById("marcadorO");
     const puntajeEmpate = document.getElementById("empate");
-    const turnIndicator = document.getElementById("turnIndicator");
+    const turnIndicator = document.getElementById("turnos");
     const gameOverlay = document.getElementById("gameOverlay");
     const botonReiniciarMarcador = document.getElementById("reiniciarMarcador");
 
