@@ -218,6 +218,10 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Movimiento IA aleatorio seleccionado", indiceAleatorio);
             this.tablero[indiceAleatorio] = "O";
             this.renderizarTablero();
+            casillas[indiceAleatorio].classList.add("rotate");
+            setTimeout(() => {
+                casillas[indiceAleatorio].classList.remove("rotate");
+            }, 500);
             this.jugadorActual = "X";
             turnIndicator.textContent = `Turno de: ${this.jugadorActual}`;
             this.manejarClickCasilla({ target: casillas[indiceAleatorio] });
@@ -230,6 +234,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("Movimiento IA minimax seleccionado", mejorMovimiento.indice);
                 this.tablero[mejorMovimiento.indice] = "O";
                 this.renderizarTablero();
+                casillas[mejorMovimiento.indice].classList.add("rotate");
+                setTimeout(() => {
+                    casillas[mejorMovimiento.indice].classList.remove("rotate");
+                }, 500);
                 // Verificar ganador o empate antes de cambiar turno
                 const resultado = this.verificarGanador(this.tablero);
                 if (resultado) {
@@ -253,6 +261,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const targetCell = casillas[mejorMovimiento.indice];
                 this.tablero[mejorMovimiento.indice] = "O";
                 this.renderizarTablero();
+                targetCell.classList.add("rotate");
+                setTimeout(() => {
+                    targetCell.classList.remove("rotate");
+                }, 500);
                 this.jugadorActual = "X";
                 turnIndicator.textContent = `Turno de: ${this.jugadorActual}`;
                 this.manejarClickCasilla({ target: targetCell });
