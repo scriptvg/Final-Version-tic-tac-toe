@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
 </head>
 <body>
@@ -25,13 +26,13 @@
             Modo de Juego:
             <select id="modoJuego">
               <option value="pvp">Jugador vs Jugador</option>
-              <option value="random">Jugador vs Random</option>
+              <option value="aleatorio">Jugador vs Random</option>
               <option value="minimax">Jugador vs Minimax</option>
-              <option value="alphabeta">Jugador vs Minimax Alpha-Beta</option>
+              <option value="alphaBeta">Jugador vs Minimax Alpha-Beta</option>
             </select>
           </label>
 
-        <button id="iniciarJuego">Iniciar Juego</button>
+        <button id="iniciarJuego"><i class="fa fa-play"></i></button>
       </div>
     
         
@@ -43,7 +44,7 @@
       <p>X: <span id="marcadorX">0</span></p>
       <p>O: <span id="marcadorO">0</span></p>
       <p>Empate: <span id="empate">0</span></p>
-      <button id="reiniciarMarcador">Reiniciar Marcador</button>
+      <button id="reiniciarMarcador"><i class="fa fa-redo"></i></button>
       </div>
 
         <div id="turnos" class="hidden">Turno de: X</div>
@@ -61,7 +62,7 @@
         <div class="casilla" id="cell-8"></div>
       </div>
 
-      <button id="reiniciar">Reiniciar Juego</button>
+      <button id="reiniciar"><i class="fa fa-redo"></i></button>
   </div>
 
   
