@@ -84,7 +84,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (this.modo !== "pvp" && this.jugadorActual === "O") {
                 setTimeout(() => {
-                    this.modo === "aleatorio" ? this.movimientoIAAleatorio() : this.movimientoIAMinimax();
+                    if (this.modo === "aleatorio") {
+                        this.movimientoIAAleatorio();
+                    } else if (this.modo === "minimax") {
+                        this.movimientoIAMinimax();
+                    } else if (this.modo === "alphabeta") {
+                        this.movimientoIAAlphaBeta();
+                    }
                 }, 500);
             }
         },
@@ -209,6 +215,75 @@ document.addEventListener("DOMContentLoaded", () => {
             if (mejorMovimiento.indice !== undefined) {
                 const targetCell = casillas[mejorMovimiento.indice];
                 this.manejarClickCasilla({ target: targetCell });
+            }
+        },
+
+        movimientoIAAlphaBeta() {
+            const mejorMovimiento = this.alphaBeta(this.tablero.slice(), "O", -Infinity, Infinity);
+            if (mejorMovimiento.indice !== undefined) {
+                const targetCell = casillas[mejorMovimiento.indice];
+                this.manejarClickCasilla({ target: targetCell });
+            }
+        },
+
+        alphaBeta(tablero, jugador, alpha, beta) {
+            const resultado = this.verificarGanador(tablero);
+            if (resultado) {
+                if (resultado === "X") {
+                    return { puntaje: -1 };
+                } else if (resultado === "O") {
+                    return { puntaje: 1 };
+                } else {
+                    return { puntaje: 0 };
+                }
+            }
+
+            if (!tablero.includes("")) {
+                return { puntaje: 0 };
+            }
+
+            if (jugador === "O") {
+                let mejorPuntaje = -Infinity;
+                let mejorMovimiento;
+
+                for (let i = 0; i < tablero.length; i++) {
+                    if (tablero[i] === "") {
+                        tablero[i] = jugador;
+                        const resultado = this.alphaBeta(tablero, "X", alpha, beta);
+                        tablero[i] = "";
+                        if (resultado.puntaje > mejorPuntaje) {
+                            mejorPuntaje = resultado.puntaje;
+                            mejorMovimiento = { indice: i, puntaje: mejorPuntaje };
+                        }
+                        alpha = Math.max(alpha, resultado.puntaje);
+                        if (beta <= alpha) {
+                            break;
+                        }
+                    }
+                }
+
+                return mejorMovimiento;
+            } else {
+                let mejorPuntaje = Infinity;
+                let mejorMovimiento;
+
+                for (let i = 0; i < tablero.length; i++) {
+                    if (tablero[i] === "") {
+                        tablero[i] = jugador;
+                        const resultado = this.alphaBeta(tablero, "O", alpha, beta);
+                        tablero[i] = "";
+                        if (resultado.puntaje < mejorPuntaje) {
+                            mejorPuntaje = resultado.puntaje;
+                            mejorMovimiento = { indice: i, puntaje: mejorPuntaje };
+                        }
+                        beta = Math.min(beta, resultado.puntaje);
+                        if (beta <= alpha) {
+                            break;
+                        }
+                    }
+                }
+
+                return mejorMovimiento;
             }
         }
     };
