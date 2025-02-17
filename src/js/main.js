@@ -14,10 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const botonReiniciarMarcador = document.getElementById("reiniciarMarcador");
 
     
-    /* Obj del juego */
+    /* Objeto del juego */
     const TresEnRaya = {
         tablero: Array(9).fill(""),
-        
         jugadorActual: "X",
         modo: "pvp",
         puntuacion: JSON.parse(localStorage.getItem("marcador")) || {
