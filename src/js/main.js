@@ -1,4 +1,6 @@
+/* Espera a que el DOM tenga todo el contenido cargado */
 document.addEventListener("DOMContentLoaded", () => {
+    /* Elementos del DOM necesarios */
     console.log("DOM fully loaded and parsed");
     const casillas = document.querySelectorAll(".casilla");
     const botonReiniciar = document.getElementById("reiniciar");
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const botonReiniciarMarcador = document.getElementById("reiniciarMarcador");
 
     
-    
+    /* Obj del juego */
     const TresEnRaya = {
         tablero: Array(9).fill(""),
         jugadorActual: "X",

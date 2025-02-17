@@ -55,7 +55,7 @@ body {
 
 /* Efecto de escala al hacer hover */
 @media (hover: hover) {
-    .controls:hover, .tablero:hover, .marcador:hover, .menuPersonaje:hover {
+    .tablero:hover{
         transform: scale(1.03);
     }
 }
