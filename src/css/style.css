@@ -87,7 +87,7 @@ body {
         height: auto;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
         grid-column-gap: 0px;
         grid-row-gap: 0px;
 }
@@ -238,16 +238,4 @@ button {
 }
 
 /* Estilos responsivos */
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-    .controls, .tablero, .marcador, .menuPersonaje, .menu {
-        padding: 10px;
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-}
 

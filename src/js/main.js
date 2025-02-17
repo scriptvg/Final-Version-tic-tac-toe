@@ -193,21 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             return mejorMovimiento;
-            } else {
-            let mejorPuntaje = Infinity;
-            let mejorMovimiento = null;
-            for (let i = 0; i < tablero.length; i++) {
-                if (tablero[i] === "") {
-                tablero[i] = "O";
-                const resultado = this.minimax(tablero, "X");
-                tablero[i] = "";
-                if (resultado.puntaje < mejorPuntaje) {
-                    mejorPuntaje = resultado.puntaje;
-                    mejorMovimiento = { indice: i, puntaje: mejorPuntaje };
-                }
-                }
-            }
-            return mejorMovimiento;
             }
         },
 
