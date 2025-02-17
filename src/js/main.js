@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* Obj del juego */
     const TresEnRaya = {
         tablero: Array(9).fill(""),
+        
         jugadorActual: "X",
         modo: "pvp",
         puntuacion: JSON.parse(localStorage.getItem("marcador")) || {
