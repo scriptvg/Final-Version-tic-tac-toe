@@ -59,7 +59,7 @@ body {
     padding: 10px;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
-    width: 45%;
+    width: 86%;
     height: 9.5%;
     text-align: center;
     justify-content: center;
@@ -189,7 +189,9 @@ button {
 }
 
 #reiniciar {
-    margin-top: 10px;
+    position: absolute;
+    top: 520px;
+    left: 745px;
 }
 
 /* Animación para las casillas ganadoras */
