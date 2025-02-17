@@ -147,8 +147,8 @@ body {
 
 /* Animación de rotación para el efecto de movimiento de la IA */
 @keyframes rotate {
-    from { transform: rotate(0deg); transform: scale(0.1) }
-    to { transform: rotate(360deg); transform: scale(1.1) }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .casilla.rotate {
