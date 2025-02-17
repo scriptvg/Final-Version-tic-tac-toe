@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const resultado = this.verificarGanador(this.tablero);
             if (resultado) {
+                
                 this.terminarJuego(resultado);
                 return;
             }
