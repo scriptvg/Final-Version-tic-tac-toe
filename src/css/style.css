@@ -208,6 +208,7 @@ button {
 /* Animación para las casillas ganadoras */
 .winning-cell {
     animation: pulse 1s infinite;
+    background-color: #4CAF50;
 }
 
 /* Estilos para las etiquetas del menú de personaje */
@@ -246,35 +247,3 @@ button {
     0%, 100% { box-shadow: var(--box-shadow-inset); transform: scale(1); }
     50% { box-shadow: var(--box-shadow); transform: scale(1.05); }
 }
-
-/* Estilos responsivos */
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-    .controls, .tablero, .marcador, .menuPersonaje, .menu {
-        padding: 10px;
-        width: 100%;
-    }
-    .game-container {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        width: 100%;
-    }
-    .tablero {
-        max-width: 100%;
-        gap: 10px;
-    }
-    .casilla {
-        font-size: 20vw;
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 14px;
-        width: 100%;
-    }
-    .marcador, .menuPersonaje {
-        max-width: 100%;
-    }
-}
-

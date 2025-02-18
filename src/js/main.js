@@ -71,6 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
             for (const [a, b, c] of combinacionesGanadoras) {
                 if (tablero[a] && tablero[a] === tablero[b] && tablero[a] === tablero[c]) {
                     console.log("Ganador encontrado", tablero[a]);
+                    casillas[a].classList.add("winning-cell");
+                    casillas[b].classList.add("winning-cell");
+                    casillas[c].classList.add("winning-cell");
                     return tablero[a];
                 }
             }
