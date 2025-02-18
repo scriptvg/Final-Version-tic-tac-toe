@@ -146,8 +146,14 @@ body {
 
 /* Animación de rotación para el efecto de movimiento de la IA */
 @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from { 
+        transform: rotate(0deg) scale(1.1); 
+        box-shadow: var(--box-shadow-inset);
+    }
+    to { 
+        transform: rotate(360deg) scale(1.1); 
+        box-shadow: var(--box-shadow-inset);
+    }
 }
 
 .casilla.rotate {
@@ -196,6 +202,8 @@ button {
     width: 700px;;
     height: 100%;
 }
+
+
 
 /* Animación para las casillas ganadoras */
 .winning-cell {
