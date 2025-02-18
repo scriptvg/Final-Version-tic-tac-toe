@@ -134,7 +134,7 @@ body {
     }
 }
 
-.casilla:active, .winning-cell {
+.casilla:active, .celda-ganadora {
     box-shadow: var(--box-shadow-inset);
     transform: scale(1.1);
 }
@@ -206,7 +206,7 @@ button {
 
 
 /* Animación para las casillas ganadoras */
-.winning-cell {
+.celda-ganadora {
     animation: pulse 1s infinite;
     background-color: #4CAF50;
 }

@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     /* Elementos del DOM necesarios */
     console.log("DOM fully loaded and parsed");
-    const casillas = document.querySelectorAll(".casilla");
+    const casillas = Array.from(document.getElementsByClassName("casilla"));
     const botonReiniciar = document.getElementById("reiniciar");
     const botonIniciar = document.getElementById("iniciarJuego");
     const seleccionModo = document.getElementById("modoJuego");
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         juegoTerminado: true,
 
+        /* Inicia el juego */
         iniciar() {
             console.log("Iniciando juego");
             this.tablero = Array(9).fill("");
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             turnIndicator.textContent = `Turno de: ${this.jugadorActual}`;
         },
 
+        /* Renderiza el tablero */
         renderizarTablero() {
             console.log("Renderizando tablero", this.tablero);
             for (let i = 0; i < this.tablero.length; i++) {
@@ -44,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
 
+        /* Actualiza el marcador */
         actualizarMarcador() {
             console.log("Modo de juego actual:", this.modo);
             if (!this.puntuacion[this.modo]) {
@@ -56,11 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
             puntajeEmpate.innerText = this.puntuacion[this.modo].empate || 0;
         },
 
+        /* Guarda la puntuación en LocalStorage */
         guardarPuntuacion() {
             console.log("Guardando puntuación", this.puntuacion);
             localStorage.setItem("marcador", JSON.stringify(this.puntuacion));
         },
 
+        /* Verifica si hay un ganador */
         verificarGanador(tablero) {
             console.log("Verificando ganador", tablero);
             const combinacionesGanadoras = [
@@ -71,15 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
             for (const [a, b, c] of combinacionesGanadoras) {
                 if (tablero[a] && tablero[a] === tablero[b] && tablero[a] === tablero[c]) {
                     console.log("Ganador encontrado", tablero[a]);
-                    casillas[a].classList.add("winning-cell");
-                    casillas[b].classList.add("winning-cell");
-                    casillas[c].classList.add("winning-cell");
+                    /* Añadir casilla celda-ganadora */
+                    casillas[a].classList.add("celda-ganadora");
+                    casillas[b].classList.add("celda-ganadora");
+                    casillas[c].classList.add("celda-ganadora");
                     return tablero[a];
                 }
             }
             return null;
         },
 
+        /* Maneja el click en una casilla */
         manejarClickCasilla(evento) {
             if (this.juegoTerminado) return;
             const indiceCasilla = evento.target.id.split("-")[1];
@@ -117,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
 
+        /* Habilita o deshabilia los inputs */
         toggleInputs(disable) {
             console.log("Toggling inputs", disable);
             document.getElementById("nombreJugador1").disabled = disable;
@@ -125,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
             botonIniciar.disabled = disable;
         },
 
+        /* Termina el juego */
         terminarJuego(resultado) {
             console.log("Terminando juego", resultado);
             this.juegoTerminado = true;
@@ -140,11 +149,16 @@ document.addEventListener("DOMContentLoaded", () => {
             this.actualizarMarcador();
         },
 
+        /* Reinicia el juego */
         reiniciarJuego() {
             console.log("Reiniciando juego");
+            casillas.forEach(casilla => {
+                casilla.classList.remove("celda-ganadora", "pulse");
+            })
             this.iniciar();
         },
 
+        /* Reinicia el marcador */
         reiniciarMarcador() {
             console.log("Reiniciando marcador");
             this.puntuacion = {
@@ -157,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
             this.actualizarMarcador();
         },
 
+        /* Asigna eventos a los elementos del DOM */
         asignarEventos() {
             console.log("Asignando eventos");
             casillas.forEach(casilla => {
@@ -175,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
             botonReiniciarMarcador.addEventListener("click", () => this.reiniciarMarcador());
         },
 
+        /* Algoritmo minimax */
         minimax(tablero, jugador) {
             const ganador = this.verificarGanador(tablero);
             if (ganador === "X") return { puntaje: 1 };
@@ -199,6 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
 
+        /* Movimiento IA aleatorio (math.random) */
         movimientoIAAleatorio() {
             console.log("Ejecutando movimiento IA aleatorio");
             let indiceAleatorio;
@@ -209,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Movimiento IA aleatorio seleccionado", indiceAleatorio);
             this.tablero[indiceAleatorio] = "O";
             this.renderizarTablero();
+            /* Anadido clase rotate a los movimientos de la maquina  */
             casillas[indiceAleatorio].classList.add("rotate");
             setTimeout(() => {
                 casillas[indiceAleatorio].classList.remove("rotate");
@@ -218,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
             this.manejarClickCasilla({ target: casillas[indiceAleatorio] });
         },
 
+        /* Movimiento IA con Minimax */
         movimientoIAMinimax() {
             console.log("Ejecutando movimiento IA minimax");
             const mejorMovimiento = this.minimax(this.tablero.slice(), "O");
@@ -225,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("Movimiento IA minimax seleccionado", mejorMovimiento.indice);
                 this.tablero[mejorMovimiento.indice] = "O";
                 this.renderizarTablero();
+                /* Anadido clase rotate a los movimientos de la maquina  */
                 casillas[mejorMovimiento.indice].classList.add("rotate");
                 setTimeout(() => {
                     casillas[mejorMovimiento.indice].classList.remove("rotate");
@@ -244,6 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
 
+        /* Movimiento IA con AlphaBeta */
         movimientoIAAlphaBeta() {
             console.log("Ejecutando movimiento IA AlphaBeta");
             const mejorMovimiento = this.alphaBeta(this.tablero.slice(), "O", -Infinity, Infinity);
@@ -262,6 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
 
+        /* Algoritmo AlphaBeta */
         alphaBeta(tablero, jugador, alpha, beta) {
             console.log("Ejecutando AlphaBeta", tablero, jugador, alpha, beta);
             const resultado = this.verificarGanador(tablero);
